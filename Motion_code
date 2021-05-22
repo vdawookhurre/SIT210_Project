@@ -1,0 +1,29 @@
+import RPi.GPIO as GPIO
+import time
+import datetime
+from gpiozero import MotionSensor
+import requests
+
+GPIO.setmode(GPIO.BOARD)
+PIR = 7
+GPIO.setup(PIR, GPIO.IN)
+
+def detectmotion():
+    if (GPIO.input(PIR) !=0):
+        print("Motion detected at " + time.strftime("%H:%M:%S"))
+        
+        requests.post('https://maker.ifttt.com/trigger/Motion/with/key/dSP3lXtWtpcCZt2ekwEDu46QC4b5H4JzP5LTBx4SdM3')
+        time.sleep(5)
+    
+print("PIR Module Test (CTRL+C to exit)")
+time.sleep(2)
+print ("Ready")
+
+try:
+               
+               while 1:
+                   detectmotion()
+                    
+except KeyboardInterrupt:
+               print("Quit")
+               GPIO.cleanup()
