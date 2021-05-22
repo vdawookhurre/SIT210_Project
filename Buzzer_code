@@ -1,0 +1,32 @@
+//Define the input pin
+int buzz = A1;
+
+//setting up the device and turning on the buzzer
+void setup() {
+    
+    pinMode(buzz, OUTPUT);
+    tone(buzz,5000,300);
+    Particle.subscribe("Motion", alarm);
+    }
+    
+void loop() {
+    
+    
+}
+
+void alarm(const char *event, const char *data) //forward declaration
+
+{
+    
+    
+    if(strcmp(data, "Motion")==0)  //if motion is received buzzer will go off 1 time
+    {
+        Particle.publish("Motion_detected");
+        tone(buzz,5000,300);
+        delay(500);
+    }
+    else
+    {
+        //else no action taken
+    }
+}
